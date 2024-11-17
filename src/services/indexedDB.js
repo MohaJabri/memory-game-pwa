@@ -1,30 +1,131 @@
 export const saveHighScore = async (score) => {
+  const db = await openDB();
+  const tx = db.transaction('userScores', 'readwrite');
+  const store = tx.objectStore('userScores');
+  await store.put(score, 'highScore');
+  await tx.complete; // No necesitas await aquí
+};
+
+export const getHighScore = async () => {
+  const db = await openDB();
+  const tx = db.transaction('userScores', 'readonly');
+  const store = tx.objectStore('userScores');
+  const score = await store.get('highScore');
+  return score || 0;
+};
+
+export const openDB = () => {
+  return new Promise((resolve, reject) => {
+    const request = indexedDB.open('memoryGameDB', 5);
+    
+    request.onupgradeneeded = (e) => {
+      const db = e.target.result;
+      
+      if (!db.objectStoreNames.contains('users')) {
+        const userStore = db.createObjectStore('users', {
+          keyPath: 'id',
+          autoIncrement: true
+        });
+        userStore.createIndex('name', 'name', { unique: false });
+      }
+      
+      if (!db.objectStoreNames.contains('userScores')) {
+        const userScoresStore = db.createObjectStore('userScores', {
+          keyPath: 'id',
+          autoIncrement: true
+        });
+        userScoresStore.createIndex('userId', 'userId', { unique: false });
+      }
+    };
+
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = (e) => reject(e.target.error);
+  });
+};
+
+export const checkUserExists = async (userName) => {
+  const db = await openDB();
+  const tx = db.transaction('users', 'readonly');
+  const store = tx.objectStore('users');
+  const index = store.index('name');
+  
+  try {
+    const result = await index.get(userName);
+    return result !== undefined;
+  } catch (error) {
+    console.error('Error checking user:', error);
+    return false;
+  } finally {
+    tx.complete;
+  }
+};
+
+export const getUserByName = async (userName) => {
+  const db = await openDB();
+  const tx = db.transaction('users', 'readonly');
+  const store = tx.objectStore('users');
+  const index = store.index('name');
+
+  try {
+    const user = await index.get(userName);
+    return user;
+  } catch (error) {
+    console.error('Error getting user:', error);
+    return null;
+  } finally {
+    tx.complete; // No necesitas await aquí
+  }
+};
+
+export const saveUser = async (userName) => {
+  const db = await openDB();
+  const tx = db.transaction('users', 'readwrite');
+  const store = tx.objectStore('users');
+  const user = {
+    name: userName,
+    lastLogin: new Date()
+  }
+  const userId = await store.add(user);
+  await tx.complete;
+  
+  sessionStorage.setItem('currentUser', JSON.stringify({
+    id: userId,
+    name: userName
+  }));
+  return userId;
+};
+
+export const saveUserScore = async (score) => {
+  const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+  if (!currentUser) return;
+  
+  const db = await openDB();
+  const tx = db.transaction('userScores', 'readwrite');
+  const store = tx.objectStore('userScores');
+  const scoreData = {
+    userId: currentUser.id,
+    score: score,
+    date: new Date()
+  };
+  await store.add(scoreData);
+  await tx.complete;
+};
+
+export const getCurrentUser = () => {
+  const user = sessionStorage.getItem('currentUser');
+  return user ? JSON.parse(user) : null;
+};
+
+export const getUserScores = async (userId) => {
+  try {
     const db = await openDB();
-    const tx = db.transaction('scores', 'readwrite');
-    const store = tx.objectStore('scores');
-    await store.put(score, 'highScore');
-    await tx.complete;
-  };
-  
-  export const getHighScore = async () => {
-    const db = await openDB();
-    const tx = db.transaction('scores', 'readonly');
-    const store = tx.objectStore('scores');
-    const score = await store.get('highScore');
-    return score || 0;
-  };
-  
-  const openDB = () => {
-    return new Promise((resolve, reject) => {
-      const request = indexedDB.open('memoryGameDB', 1);
-      request.onupgradeneeded = (e) => {
-        const db = e.target.result;
-        if (!db.objectStoreNames.contains('scores')) {
-          db.createObjectStore('scores');
-        }
-      };
-      request.onsuccess = () => resolve(request.result);
-      request.onerror = (e) => reject(e.target.error);
-    });
-  };
-  
+    const tx = db.transaction('userScores', 'readonly');
+    const store = tx.objectStore('userScores');
+    const index = store.index('userId');
+    const scores = await index.getAll(userId);
+    return scores;
+  } catch (error) {
+    console.error('Error obteniendo puntuaciones:', error);
+    return [];
+  }
+};

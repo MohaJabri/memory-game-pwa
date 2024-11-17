@@ -1,4 +1,5 @@
 import { LitElement, html, css, unsafeCSS } from 'lit';
+import { saveUserScore, getCurrentUser } from '../services/indexedDB.js';
 
 class GameBoard extends LitElement {
   static styles = unsafeCSS`
@@ -9,13 +10,38 @@ class GameBoard extends LitElement {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
     }
+
+    .header > * {
+      flex: 1;
+      min-width: 200px;
+      text-align: center;
+    }
+
+    .header span {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 10px;
+    }
+
     .header select {
       background-color: white;
       border: none;
       padding: 5px;
       border-radius: 4px;
+      max-width: 200px;
     }
+
+    .difficulty-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
     .game-container {
       text-align: center;
       padding: 20px;
@@ -119,7 +145,8 @@ class GameBoard extends LitElement {
 
   constructor() {
     super();
-    this.userName = '';
+    const currentUser = getCurrentUser();
+    this.userName = currentUser ? currentUser.name : '';
     this.difficulty = 'bajo';
     this.numbers = [];
     this.revealedNumbers = [];
@@ -189,32 +216,33 @@ class GameBoard extends LitElement {
   }
 
   // Maneja el clic de un cuadro en el tablero
-  onCardClick(index) {
+  async onCardClick(index) {
     if (this.gameOver || this.timer > 0) return;
 
     const selectedNumber = this.numbers[index];
     this.revealedNumbers[index] = selectedNumber;
 
     if (selectedNumber === this.targetNumber) {
-      // Acierto - Puntuación según dificultad
+      let points = 0;
       switch (this.difficulty) {
         case 'bajo':
-          this.score += 10;
+          points = 10;
           break;
         case 'medio':
-          this.score += 20;
+          points = 20;
           break;
         case 'alto':
-          this.score += 30;
+          points = 30;
           break;
       }
+      this.score += points;
+      await saveUserScore(points);
       this.message = '¡Correcto! Continúa jugando.';
       this.requestUpdate();
       setTimeout(() => {
         this.startGame();
       }, 1000);
     } else {
-      // Fallo
       this.endGame('¡Juego Terminado! Has perdido.');
     }
   }
@@ -235,8 +263,8 @@ class GameBoard extends LitElement {
   render() {
     return html`
       <div class="header">
-        <span>¡Hola, ${this.userName}!</span>
-        <div>
+        <span title="${this.userName}">¡Hola, ${this.userName}!</span>
+        <div class="difficulty-container">
           <label for="difficulty">Dificultad:</label>
           <select id="difficulty" @change="${this.handleDifficultyChange}" .value="${this.difficulty}">
             <option value="bajo">Bajo (10s) - 10 puntos</option>

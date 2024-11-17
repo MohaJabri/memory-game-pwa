@@ -1,38 +1,127 @@
 import { LitElement, html, css } from 'lit';
+import { saveUser } from '../services/indexedDB.js';
 
 class HomeView extends LitElement {
+  static styles = css`
+    :host {
+      display: block;
+      width: 100%;
+    }
+
+    .header {
+      background-color: #2196F3;
+      color: white;
+      padding: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 2rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 1.5rem;
+      text-align: center;
+    }
+  `;
+
   static properties = {
     name: { type: String },
+    error: { type: String }
   };
 
   constructor() {
     super();
     this.name = '';
+    this.error = '';
   }
 
-  _onStartGame() {
+  handleInput(e) {
+    const value = e.target.value.slice(0, 12);
+    this.name = value;
+    this.error = '';
+  }
+
+  async _onStartGame() {
     if (this.name.trim() === '') {
-      alert('Por favor, ingresa tu nombre');
+      this.error = 'Por favor, ingresa tu nombre';
+      this.requestUpdate();
       return;
     }
-    // Guardar nombre en la URL para pasar a la siguiente pantalla
-    window.location.href = `/game?name=${encodeURIComponent(this.name)}`;
+    
+    try {
+      await saveUser(this.name);
+      window.location.href = `/game?name=${encodeURIComponent(this.name)}`;
+    } catch (error) {
+      console.error('Error:', error);
+      this.error = 'Error al procesar el usuario. Por favor, intenta de nuevo.';
+      this.requestUpdate();
+    }
   }
 
   render() {
     return html`
-      <div class="container d-flex flex-column justify-content-center align-items-center min-vh-100">
-        <h1 class="text-center mb-4">Juego de Memoria</h1>
-        <div class="form-group">
-          <input
-            type="text"
-            class="form-control"
-            .value="${this.name}"
-            @input="${(e) => (this.name = e.target.value)}"
-            placeholder="Introduce tu nombre"
-          />
+      <div class="header">
+        <h1>Juego de Memoria</h1>
+      </div>
+
+      <div class="container py-4">
+        <div class="row justify-content-center">
+          <div class="col-12 col-md-6 col-lg-4">
+            <div class="card shadow">
+              <div class="card-body p-4">
+                <div class="text-center mb-4">
+                  <i class="fas fa-gamepad fa-3x text-primary"></i>
+                </div>
+
+                <div class="form-group mb-4">
+                  <label for="username" class="form-label fw-bold">Nombre de Usuario</label>
+                  <div class="input-group">
+                    <span class="input-group-text">
+                      <i class="fas fa-user"></i>
+                    </span>
+                    <input
+                      type="text"
+                      id="username"
+                      class="form-control form-control-lg ${this.error ? 'is-invalid' : ''}"
+                      .value="${this.name}"
+                      @input="${this.handleInput}"
+                      maxlength="12"
+                      placeholder="Introduce tu nombre"
+                    />
+                  </div>
+                  <div class="d-flex justify-content-between mt-1">
+                    <small class="text-muted">Máximo 12 caracteres</small>
+                    <small class="text-muted">${this.name.length}/12</small>
+                  </div>
+                  ${this.error ? html`
+                    <div class="invalid-feedback d-block">
+                      ${this.error}
+                    </div>
+                  ` : ''}
+                </div>
+
+                <button 
+                  class="btn btn-primary btn-lg w-100"
+                  @click="${this._onStartGame}"
+                  ?disabled="${!this.name.trim()}"
+                >
+                  <i class="fas fa-play me-2"></i>
+                  Empezar a Jugar
+                </button>
+
+                <div class="text-center mt-4">
+                  <small class="text-muted">
+                    <i class="fas fa-info-circle me-1"></i>
+                    ¡Pon a prueba tu memoria y diviértete!
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <button class="btn btn-primary" @click="${this._onStartGame}">Empezar a Jugar</button>
       </div>
     `;
   }
