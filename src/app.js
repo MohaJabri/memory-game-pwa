@@ -1,5 +1,5 @@
 // src/app.js
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css } from 'https://cdn.skypack.dev/lit';
 import './components/home-view.js';
 import './components/game-board.js';
 
