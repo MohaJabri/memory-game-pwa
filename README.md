@@ -2,6 +2,9 @@
 
 Un juego de memoria desarrollado como Progressive Web App (PWA) usando LitElement y persistencia con IndexedDB.
 
+## Demo
+La aplicación está desplegada en: [https://mohajabri.github.io/memory-game-pwa](https://mohajabri.github.io/memory-game-pwa)
+
 ## Requisitos Previos
 
 - Node.js (versión 14 o superior)

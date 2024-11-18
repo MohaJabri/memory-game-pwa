@@ -1,4 +1,4 @@
-import { LitElement, html, unsafeCSS } from 'https://cdn.skypack.dev/lit';
+import { LitElement, html, unsafeCSS } from Lit;
 import { saveUserScore, getCurrentUser } from '../services/indexedDB.js';
 
 class GameBoard extends LitElement {
@@ -244,18 +244,12 @@ class GameBoard extends LitElement {
     this.revealedNumbers[index] = selectedNumber;
 
     if (selectedNumber === this.targetNumber) {
-      let points = 0;
-      switch (this.difficulty) {
-        case 'bajo':
-          points = 10;
-          break;
-        case 'medio':
-          points = 20;
-          break;
-        case 'alto':
-          points = 30;
-          break;
-      }
+      const DIFFICULTY_POINTS = {
+        'bajo': 10,
+        'medio': 20,
+        'alto': 30
+      };
+      let points = DIFFICULTY_POINTS[this.difficulty] || 0;
       this.score += points;
       await saveUserScore(points);
       this.message = '¡Correcto! Continúa jugando.';

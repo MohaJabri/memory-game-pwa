@@ -12,7 +12,7 @@
         "build": "rm -rf dist && npm run build:html && npm run build:sw && npm run build:manifest && npm run build:icon",
         "postbuild": "cp -r node_modules/lit dist/",
         "serve": "http-server dist",
-        "lint": "eslint src/**/*.js",
+        "lint": "eslint 'src/**/*.js' --fix",
         "test": "web-test-runner --node-resolve",
         "test:watch": "web-test-runner --node-resolve --watch",
         "test:components": "web-test-runner \"src/tests/components/**/*.spec.js\" --node-resolve",
@@ -36,6 +36,9 @@
         "@web/test-runner": "^0.15.0",
         "@web/test-runner-chrome": "^0.15.0",
         "chai": "^4.3.7",
+        "eslint": "^8.56.0",
+        "eslint-plugin-lit": "^1.11.0",
+        "eslint-plugin-wc": "^2.0.4",
         "gh-pages": "^6.2.0",
         "parcel": "^2.13.0",
         "sinon": "^15.0.0"
