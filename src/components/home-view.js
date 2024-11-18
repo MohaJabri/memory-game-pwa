@@ -2,7 +2,7 @@ import { LitElement, html, css } from '../lib/lit.js';
 import { saveUser } from '../services/indexedDB.js';
 
 class HomeView extends LitElement {
-  static styles = css`
+  static styles = unsafeCSS`
     :host {
       display: flex;
       flex-direction: column;

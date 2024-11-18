@@ -1,14 +1,13 @@
 const CACHE_NAME = 'memory-game-v2';
-const BASE_PATH = '/memory-game-pwa';
+const BASE_URL = 'https://mohajabri.github.io/memory-game-pwa';
 const urlsToCache = [
-  `${BASE_PATH}/`,
-  `${BASE_PATH}/index.html`,
-  `${BASE_PATH}/src/app.js`,
-  `${BASE_PATH}/src/components/home-view.js`,
-  `${BASE_PATH}/src/components/game-board.js`,
-  `${BASE_PATH}/src/services/indexedDB.js`,
-  `${BASE_PATH}/public/manifest.json`,
-  `${BASE_PATH}/public/icon.png`,
+  `${BASE_URL}/`,
+  `${BASE_URL}/index.html`,
+  `${BASE_URL}/src/app.js`,
+  `${BASE_URL}/src/components/home-view.js`,
+  `${BASE_URL}/src/components/game-board.js`,
+  `${BASE_URL}/manifest.webmanifest`,
+  `${BASE_URL}/icon.png`,
   'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'
 ];
 
