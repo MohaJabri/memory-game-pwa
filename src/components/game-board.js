@@ -285,7 +285,7 @@ class GameBoard extends LitElement {
     return html`
       <div class="game-container">
         <div class="header">
-          <span>Jugador: ${this.playerName}</span>
+          <span>¡Hola, ${this.playerName}!</span>
           ${this._renderDifficultySelector()}
           <span>Puntos: ${this.score}</span>
         </div>
