@@ -1,8 +1,8 @@
-import { LitElement, html, css } from 'https://cdn.skypack.dev/lit';
+import { LitElement, html, unsafeCSS } from 'https://cdn.skypack.dev/lit';
 import { saveUserScore, getCurrentUser } from '../services/indexedDB.js';
 
 class GameBoard extends LitElement {
-  static styles = css`
+  static styles = unsafeCSS`
     .header {
       background-color: #2196F3;
       color: white;

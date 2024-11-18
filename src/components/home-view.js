@@ -1,8 +1,8 @@
-import { LitElement, html, css } from 'https://cdn.skypack.dev/lit';
+import { LitElement, html, css, unsafeCSS } from 'https://cdn.skypack.dev/lit';
 import { saveUser } from '../services/indexedDB.js';
 
 class HomeView extends LitElement {
-  static styles = unsafeCSS`
+  static styles = css`
     :host {
       display: flex;
       flex-direction: column;
@@ -54,7 +54,6 @@ class HomeView extends LitElement {
       padding: 2rem;
     }
 
-    /* Estilos para asegurar que los elementos de Bootstrap estén centrados */
     .input-group {
       width: 100%;
       margin: 0 auto;
