@@ -11,13 +11,19 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const path = window.location.pathname;
     const baseRoute = '/memory-game-pwa';
+    const params = new URLSearchParams(window.location.search);
+    const playerName = params.get('name');
     
     if (path === baseRoute || path === `${baseRoute}/`) {
       homeView.style.display = 'block';
       gameBoard.style.display = 'none';
-    } else if (path === `${baseRoute}/game`) {
+    } else if (path === `${baseRoute}/game` && playerName) {
       homeView.style.display = 'none';
       gameBoard.style.display = 'block';
+      gameBoard.setAttribute('player-name', playerName);
+    } else {
+      // Redirigir a la página principal si la ruta no es válida
+      window.location.href = `${window.location.origin}${baseRoute}`;
     }
   }
 

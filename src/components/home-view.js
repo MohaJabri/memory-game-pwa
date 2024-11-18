@@ -107,7 +107,9 @@ class HomeView extends LitElement {
     
     try {
       await saveUser(this.name);
-      window.location.href = `${window.location.origin}/memory-game-pwa/game?name=${encodeURIComponent(this.name)}`;
+      const gameUrl = `${window.location.origin}/memory-game-pwa/game?name=${encodeURIComponent(this.name)}`;
+      history.pushState({}, '', gameUrl);
+      window.dispatchEvent(new PopStateEvent('popstate'));
     } catch (error) {
       console.error('Error:', error);
       this.error = 'Error al procesar el usuario. Por favor, intenta de nuevo.';
