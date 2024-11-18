@@ -4,7 +4,6 @@ import './components/home-view.js';
 import './components/game-board.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Función para manejar el renderizado de la vista actual
   function renderView() {
     const homeView = document.querySelector('home-view');
     const gameBoard = document.querySelector('game-board');
@@ -13,18 +12,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const baseRoute = '/memory-game-pwa';
     const baseUrl = 'https://mohajabri.github.io/memory-game-pwa/';
     
-    if (path === baseRoute || path === `${baseRoute}/`) {
-      homeView.style.display = 'block';
-      gameBoard.style.display = 'none';
-    } else if (path === `${baseRoute}/game`) {
+    if (path === `${baseRoute}/game`) {
+      const currentUser = sessionStorage.getItem('currentUser');
+      if (!currentUser) {
+        window.location.href = baseUrl;
+        return;
+      }
       homeView.style.display = 'none';
       gameBoard.style.display = 'block';
+    } else if (path === baseRoute || path === `${baseRoute}/`) {
+      homeView.style.display = 'block';
+      gameBoard.style.display = 'none';
     } else {
       window.location.href = baseUrl;
     }
   }
 
-  // Llamamos a renderView para mostrar la vista correcta en función de la ruta
+  
   renderView();
 
   // Establecer un "listener" para cambios en la URL, en caso de que se navegue
