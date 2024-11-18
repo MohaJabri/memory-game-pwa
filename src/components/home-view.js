@@ -107,7 +107,7 @@ class HomeView extends LitElement {
     
     try {
       await saveUser(this.name);
-      window.location.href = `/game?name=${encodeURIComponent(this.name)}`;
+      window.location.href = `${window.location.origin}/memory-game-pwa/game?name=${encodeURIComponent(this.name)}`;
     } catch (error) {
       console.error('Error:', error);
       this.error = 'Error al procesar el usuario. Por favor, intenta de nuevo.';

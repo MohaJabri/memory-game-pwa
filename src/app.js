@@ -9,13 +9,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const homeView = document.querySelector('home-view');
     const gameBoard = document.querySelector('game-board');
     
-    // Si estamos en la página de inicio
-    if (window.location.pathname === '/') {
+    const path = window.location.pathname;
+    const baseRoute = '/memory-game-pwa';
+    
+    if (path === baseRoute || path === `${baseRoute}/`) {
       homeView.style.display = 'block';
       gameBoard.style.display = 'none';
-    }
-    // Si estamos en la página del juego
-    else if (window.location.pathname === '/game') {
+    } else if (path === `${baseRoute}/game`) {
       homeView.style.display = 'none';
       gameBoard.style.display = 'block';
     }
