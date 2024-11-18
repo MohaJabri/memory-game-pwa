@@ -24,18 +24,16 @@ self.addEventListener('install', event => {
 
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
-  const validPaths = ['/', '/game', '/index.html'];
-  const path = url.pathname.replace('/memory-game-pwa', '');
+  const path = url.pathname;
+  
+  if (!path.includes('/memory-game-pwa')) {
+    event.respondWith(fetch(event.request));
+    return;
+  }
 
-  if (!validPaths.includes(path)) {
+  if (path !== `${BASE_URL}/` && path !== `${BASE_URL}/game`) {
     event.respondWith(
-      caches.match(`${BASE_URL}/`)
-        .then(response => {
-          if (response) {
-            return response;
-          }
-          return fetch(`${BASE_URL}/`);
-        })
+      Response.redirect(`${BASE_URL}/`, 302)
     );
     return;
   }
@@ -46,10 +44,10 @@ self.addEventListener('fetch', event => {
         if (response) {
           return response;
         }
-        return fetch(event.request);
-      })
-      .catch(() => {
-        return caches.match(`${BASE_URL}/`);
+        return fetch(event.request)
+          .catch(() => {
+            return caches.match(`${BASE_URL}/`);
+          });
       })
   );
 });
