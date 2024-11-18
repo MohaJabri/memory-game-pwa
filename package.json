@@ -22,7 +22,7 @@
         "predeploy": "npm run build",
         "deploy": "gh-pages -d dist"
     },
-    "author": "Tu Nombre",
+    "author": "Mohammed Jabri Faraji",
     "license": "MIT",
     "dependencies": {
         "http-server": "^14.0.0",
