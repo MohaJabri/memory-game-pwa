@@ -192,18 +192,13 @@ class GameBoard extends LitElement {
     this.revealedNumbers = new Array(9).fill(null);
     this.isRoundInProgress = true;
 
-   
-    switch (this.difficulty) {
-      case 'bajo':
-        this.timer = 10;
-        break;
-      case 'medio':
-        this.timer = 5;
-        break;
-      case 'alto':
-        this.timer = 2;
-        break;
-    }
+    const DIFFICULTY_TIMERS = {
+      'bajo': 10,
+      'medio': 5,
+      'alto': 2
+    };
+
+    this.timer = DIFFICULTY_TIMERS[this.difficulty];
 
     // Mostrar los números durante el tiempo de dificultad
     this._revealNumbers();
