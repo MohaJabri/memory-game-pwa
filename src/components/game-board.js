@@ -1,8 +1,8 @@
-import { LitElement, html, css, unsafeCSS } from 'lit';
+import { LitElement, html, css } from '../lib/lit.js';
 import { saveUserScore, getCurrentUser } from '../services/indexedDB.js';
 
 class GameBoard extends LitElement {
-  static styles = unsafeCSS`
+  static styles = css`
     .header {
       background-color: #2196F3;
       color: white;

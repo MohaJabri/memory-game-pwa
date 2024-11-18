@@ -1,4 +1,4 @@
-import { LitElement, html, css } from 'lit';
+import { LitElement, html, css } from '../lib/lit.js';
 import { saveUser } from '../services/indexedDB.js';
 
 class HomeView extends LitElement {

@@ -71,6 +71,7 @@ memory-game-pwa/
 │   ├── components/       # Componentes LitElement
 │   ├── services/        # Servicios (IndexedDB, etc.)
 │   ├── tests/           # Tests
+│   ├── lib/             # Librerías (LitElement, etc.)
 │   └── app.js           # Punto de entrada
 ├── public/
 │   ├── manifest.json    # Manifest para PWA
