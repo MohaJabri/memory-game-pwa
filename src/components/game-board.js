@@ -148,14 +148,13 @@ class GameBoard extends LitElement {
 
   constructor() {
     super();
-    const currentUser = getCurrentUser();
-    this.userName = currentUser ? currentUser.name : '';
-    this.difficulty = 'bajo';
+    this.playerName = '';
+    this.score = 0;
+    this.difficulty = 'medio';
     this.numbers = [];
     this.revealedNumbers = [];
     this.selectedNumber = null;
     this.targetNumber = null;
-    this.score = 0;
     this.gameOver = false;
     this.timer = 0;
     this.timerId = null;
@@ -172,6 +171,12 @@ class GameBoard extends LitElement {
     
     window.addEventListener('offline', () => {
       this.isOnline = false;
+      this.requestUpdate();
+    });
+
+    // Escuchar el evento game-start
+    window.addEventListener('game-start', (e) => {
+      this.playerName = e.detail.playerName;
       this.requestUpdate();
     });
   }
@@ -278,20 +283,13 @@ class GameBoard extends LitElement {
 
   render() {
     return html`
-      <div class="header">
-        <span title="${this.userName}">¡Hola, ${this.userName}!</span>
-        <div class="difficulty-container">
-          <label for="difficulty">Dificultad:</label>
-          <select id="difficulty" @change="${this.handleDifficultyChange}" .value="${this.difficulty}">
-            <option value="bajo">Bajo (10s) - 10 puntos</option>
-            <option value="medio">Medio (5s) - 20 puntos</option>
-            <option value="alto">Alto (2s) - 30 puntos</option>
-          </select>
-        </div>
-        <span>Puntos: ${this.score}</span>
-      </div>
-
       <div class="game-container">
+        <div class="header">
+          <span>Jugador: ${this.playerName}</span>
+          ${this._renderDifficultySelector()}
+          <span>Puntos: ${this.score}</span>
+        </div>
+
         ${this.targetNumber && this.timer <= 0 ? 
           html`<h2>¿Dónde está el número ${this.targetNumber}?</h2>` : 
           html`<h2>Tiempo restante: ${this.timer}</h2>`
@@ -331,6 +329,19 @@ class GameBoard extends LitElement {
       return 'revealed';
     }
     return this.revealedNumbers[index] === this.targetNumber ? 'correct' : 'wrong';
+  }
+
+  _renderDifficultySelector() {
+    return html`
+      <div class="difficulty-container">
+        <label for="difficulty">Dificultad:</label>
+        <select id="difficulty" @change="${this.handleDifficultyChange}" .value="${this.difficulty}">
+          <option value="bajo">Bajo (10s) - 10 puntos</option>
+          <option value="medio">Medio (5s) - 20 puntos</option>
+          <option value="alto">Alto (2s) - 30 puntos</option>
+        </select>
+      </div>
+    `;
   }
 }
 

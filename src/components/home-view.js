@@ -107,8 +107,16 @@ class HomeView extends LitElement {
     
     try {
       await saveUser(this.name);
-      const gameUrl = `${window.location.origin}/memory-game-pwa/game?name=${encodeURIComponent(this.name)}`;
+      const gameUrl = `${window.location.origin}/memory-game-pwa/game`;
       history.pushState({}, '', gameUrl);
+      
+      const event = new CustomEvent('game-start', {
+        detail: { playerName: this.name },
+        bubbles: true,
+        composed: true
+      });
+      this.dispatchEvent(event);
+      
       window.dispatchEvent(new PopStateEvent('popstate'));
     } catch (error) {
       console.error('Error:', error);
