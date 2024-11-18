@@ -1,16 +1,15 @@
 const CACHE_NAME = 'memory-game-v2';
+const BASE_PATH = 'https://mohajabri.github.io/memory-game-pwa/';
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/src/app.js',
-  '/src/components/home-view.js',
-  '/src/components/game-board.js',
-  '/src/services/indexedDB.js',
-  '/src/styles.css',
-  '/public/manifest.json',
-  '/public/icon.png',
-  'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'
+  `${BASE_PATH}/`,
+  `${BASE_PATH}/index.html`,
+  `${BASE_PATH}/src/app.js`,
+  `${BASE_PATH}/src/components/home-view.js`,
+  `${BASE_PATH}/src/components/game-board.js`,
+  `${BASE_PATH}/src/services/indexedDB.js`,
+  `${BASE_PATH}/public/manifest.json`,
+  `${BASE_PATH}/public/icon.png`,
+  'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'
 ];
 
 self.addEventListener('install', event => {

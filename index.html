@@ -35,21 +35,20 @@
     <home-view></home-view>
     <game-board></game-board>
 
-    <script src="./src/app.js" type="module"></script>
+    <script type="module" src="./src/app.js"></script>
 
     <script type="module">
-      // Comprobación y registro del Service Worker
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker
-            .register(new URL('./public/sw.js', import.meta.url))
+            .register('./public/sw.js', { scope: '/memory-game-pwa/' })
             .then((registration) => {
-            console.log('Service Worker registrado con éxito:', registration);
-          })
-          .catch((error) => {
-            console.log('Error al registrar el Service Worker:', error);
-          });
-                });
+              console.log('Service Worker registrado con éxito:', registration);
+            })
+            .catch((error) => {
+              console.log('Error al registrar el Service Worker:', error);
+            });
+        });
       }
     </script>
   </body>

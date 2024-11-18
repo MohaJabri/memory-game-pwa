@@ -2,7 +2,7 @@
     "name": "Juego de Memoria",
     "short_name": "Memoria",
     "description": "Juego para memorizar la posición de los números",
-    "start_url": "/",
+    "start_url": "/memory-game-pwa/",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
@@ -12,6 +12,7 @@
         "sizes": "192x192",
         "type": "image/png"
       }
-    ]
+    ],
+    "scope": "/memory-game-pwa/"
   }
   
