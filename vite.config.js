@@ -5,26 +5,26 @@ export default defineConfig({
   build: {
     rollupOptions: {
       input: {
-        main: resolve(__dirname, 'index.html'),
+        main: resolve(__dirname, 'index.html'),  
       },
-      external: [/^lit/],
       output: {
-        entryFileNames: `assets/[name].js`,
-        chunkFileNames: `assets/[name].js`,
-        assetFileNames: `assets/[name].[ext]`,
+        entryFileNames: `assets/[name].js`, 
+        chunkFileNames: `assets/[name].js`, 
+        assetFileNames: `assets/[name].[ext]`, 
         globals: {
-          lit: 'lit'
-        }
+          lit: 'lit',  // Esto es solo necesario si usas "lit" de un CDN en un entorno de producción
+        },
       }
     }
   },
   server: {
-    port: 1234
+    port: 1234  
   },
-  base: '/memory-game-pwa/',
+  base: '/memory-game-pwa/',  
   resolve: {
     alias: {
-      'lit': resolve(__dirname, 'node_modules/lit/index.js')
+      // Usamos un CDN para lit en lugar de intentar resolverlo desde node_modules
+      lit: 'https://cdn.skypack.dev/lit'
     }
   }
-}); 
+});
