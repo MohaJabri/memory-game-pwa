@@ -73,9 +73,9 @@ memory-game-pwa/
 │   ├── tests/           # Tests
 │   └── app.js           # Punto de entrada
 ├── public/
-│   ├── manifest.json    # Manifest para PWA
 │   └── icon.png        # Icono de la aplicación
 ├── sw.js           # Service Worker
+├── manifest.json    # Manifest para PWA
 └── index.html          # HTML principal
 ```
 
