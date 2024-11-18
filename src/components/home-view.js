@@ -1,4 +1,4 @@
-import { LitElement, html, css, unsafeCSS } from 'lit';
+import { LitElement, html, css, unsafeCSS } from 'https://unpkg.com/lit@^3.0.0';
 import { saveUser } from '../services/indexedDB.js';
 
 class HomeView extends LitElement {

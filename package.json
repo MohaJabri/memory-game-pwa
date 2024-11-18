@@ -4,38 +4,43 @@
     "description": "Juego de memoria con LitElement como PWA y persistencia usando IndexedDB",
     "type": "module",
     "scripts": {
-      "start": "vite",  
-      "build": "vite build",  
-      "preview": "vite preview",  
-      "test": "web-test-runner --node-resolve", 
-      "test:watch": "web-test-runner --node-resolve --watch",  
-      "test:components": "web-test-runner \"src/tests/components/**/*.spec.js\" --node-resolve",  
-      "test:services": "web-test-runner \"src/tests/services/**/*.spec.js\" --node-resolve", 
-      "test:utils": "web-test-runner \"src/tests/utils/**/*.spec.js\" --node-resolve", 
-      "predeploy": "npm run build",  
-      "deploy": "gh-pages -d dist"
+        "start": "parcel index.html --no-cache",
+        "build:html": "parcel build index.html --public-url https://mohajabri.github.io/memory-game-pwa/ --no-source-maps --no-cache",
+        "build:sw": "parcel build sw.js --dist-dir dist --no-source-maps --no-cache",
+        "build:manifest": "parcel build ./manifest.json --dist-dir dist/public --no-source-maps --no-cache",
+        "build:icon": "cp public/icon.png dist/",
+        "build": "rm -rf dist && npm run build:html && npm run build:sw && npm run build:manifest && npm run build:icon",
+        "postbuild": "cp -r node_modules/lit dist/",
+        "serve": "http-server dist",
+        "lint": "eslint 'src/**/*.js' --fix",
+        "test": "web-test-runner --node-resolve",
+        "test:watch": "web-test-runner --node-resolve --watch",
+        "test:components": "web-test-runner \"src/tests/components/**/*.spec.js\" --node-resolve",
+        "test:services": "web-test-runner \"src/tests/services/**/*.spec.js\" --node-resolve",
+        "test:utils": "web-test-runner \"src/tests/utils/**/*.spec.js\" --node-resolve",
+        "predeploy": "npm run build",
+        "deploy": "gh-pages -d dist"
     },
-    "author": "Mohammed Jabri",
+    "author": "Tu Nombre",
     "license": "MIT",
     "dependencies": {
-      "lit": "^3.2.1",  
-      "lit-router": "^0.2.2"  
+        "http-server": "^14.0.0",
+        "lit": "^3.2.1",
+        "lit-router": "^0.2.2"
     },
     "devDependencies": {
-      "@vitejs/plugin-legacy": "^5.0.0",
-      "vite": "^5.0.0",
-      "gh-pages": "^6.2.0",
-      "@open-wc/testing": "^3.1.7",
-      "@web/test-runner": "^0.15.0",
-      "@web/test-runner-chrome": "^0.15.0",
-      "chai": "^4.3.7",
-      "eslint": "^8.56.0",
-      "eslint-plugin-lit": "^1.11.0",
-      "eslint-plugin-wc": "^2.0.4",
-      "sinon": "^15.0.0",
-      "@web/dev-server-esbuild": "^1.0.0",
-      "@web/test-runner-playwright": "^0.11.0",
-      "@web/test-runner-commands": "^0.9.0"
+        "@open-wc/testing": "^3.1.7",
+        "@parcel/packager-raw-url": "^2.13.0",
+        "@parcel/transformer-raw": "^2.13.0",
+        "@parcel/transformer-webmanifest": "^2.13.0",
+        "@web/test-runner": "^0.15.0",
+        "@web/test-runner-chrome": "^0.15.0",
+        "chai": "^4.3.7",
+        "eslint": "^8.56.0",
+        "eslint-plugin-lit": "^1.11.0",
+        "eslint-plugin-wc": "^2.0.4",
+        "gh-pages": "^6.2.0",
+        "parcel": "^2.13.0",
+        "sinon": "^15.0.0"
     }
-  }
-  
+}

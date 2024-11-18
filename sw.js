@@ -2,16 +2,21 @@ const CACHE_NAME = 'memory-game-v2';
 const BASE_URL = 'https://mohajabri.github.io/memory-game-pwa';
 const urlsToCache = [
   `${BASE_URL}/`,
+  `${BASE_URL}/game`,
   `${BASE_URL}/index.html`,
   `${BASE_URL}/src/app.js`,
-  `${BASE_URL}/assets/index.js`,
-  `${BASE_URL}/assets/index.css`
+  `${BASE_URL}/src/components/home-view.js`,
+  `${BASE_URL}/src/components/game-board.js`,
+  `${BASE_URL}/manifest.webmanifest`,
+  `${BASE_URL}/icon.png`,
+  'https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
+        console.log('Cache abierto');
         return cache.addAll(urlsToCache);
       })
   );

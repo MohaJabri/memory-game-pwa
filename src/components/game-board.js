@@ -1,4 +1,4 @@
-import { LitElement, html, unsafeCSS } from 'lit';
+import { LitElement, html, unsafeCSS } from 'https://unpkg.com/lit@^3.0.0';
 import { saveUserScore, getCurrentUser } from '../services/indexedDB.js';
 
 class GameBoard extends LitElement {
@@ -184,7 +184,7 @@ class GameBoard extends LitElement {
   // Iniciar el juego y mostrar los números
   startGame() {
     if (this.gameOver) {
-      this.score = 0; 
+      this.score = 0; // Reiniciar puntos solo si es nueva partida
     }
     this.gameOver = false;
     this.message = '';

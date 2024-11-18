@@ -1,4 +1,5 @@
-import { LitElement, html, css } from 'lit';
+// src/app.js
+import { LitElement, html, css } from 'https://unpkg.com/lit@^3.0.0';
 import './components/home-view.js';
 import './components/game-board.js';
 
@@ -33,7 +34,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
+  
   renderView();
 
+  // Establecer un "listener" para cambios en la URL, en caso de que se navegue
   window.addEventListener('popstate', renderView);
 });

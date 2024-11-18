@@ -3,11 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Permissions-Policy" content="interest-cohort=()" />
+    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
     <title>Juego de Memoria</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
-    <link rel="manifest" href="/manifest.json" type="application/manifest+json" />
-    <link rel="icon" href="/public/icon.png" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="manifest" href="./manifest.json" type="application/manifest+json" crossorigin="use-credentials" />
+    <link rel="icon" href="./public/icon.png" />
     <style>
       * {
         margin: 0;
@@ -32,13 +35,15 @@
   <body>
     <home-view></home-view>
     <game-board></game-board>
-    <script src="/src/app.js" type="module"></script>
+
+    <script src="./src/app.js" type="module"></script>
+
     <script type="module">
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker
-            .register(new URL('/sw.js', import.meta.url), { 
-              scope: '/' 
+            .register(new URL('./sw.js', import.meta.url), { 
+              scope: '/memory-game-pwa/' 
             })
             .then((registration) => {
               console.log('Service Worker registrado con éxito:', registration);
