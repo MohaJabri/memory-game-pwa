@@ -1,22 +1,33 @@
 export const saveHighScore = async (score) => {
   const db = await openDB();
-  const tx = db.transaction('userScores', 'readwrite');
-  const store = tx.objectStore('userScores');
-  await store.put(score, 'highScore');
-  await tx.complete; // No necesitas await aquí
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction('userScores', 'readwrite');
+    const store = tx.objectStore('userScores');
+    const request = store.put(score, 'highScore');
+    
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
+  });
 };
 
 export const getHighScore = async () => {
   const db = await openDB();
-  const tx = db.transaction('userScores', 'readonly');
-  const store = tx.objectStore('userScores');
-  const score = await store.get('highScore');
-  return score || 0;
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction('userScores', 'readonly');
+    const store = tx.objectStore('userScores');
+    const request = store.get('highScore');
+    
+    request.onsuccess = () => resolve(request.result || 0);
+    request.onerror = () => reject(request.error);
+  });
 };
 
 export const openDB = () => {
   return new Promise((resolve, reject) => {
     const request = indexedDB.open('memoryGameDB', 5);
+    
+    request.onerror = () => reject(request.error);
+    request.onsuccess = () => resolve(request.result);
     
     request.onupgradeneeded = (e) => {
       const db = e.target.result;
@@ -37,9 +48,6 @@ export const openDB = () => {
         userScoresStore.createIndex('userId', 'userId', { unique: false });
       }
     };
-
-    request.onsuccess = () => resolve(request.result);
-    request.onerror = (e) => reject(e.target.error);
   });
 };
 

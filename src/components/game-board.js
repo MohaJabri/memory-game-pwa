@@ -141,6 +141,9 @@ class GameBoard extends LitElement {
     timerId: { type: Object },
     message: { type: String },
     isRoundInProgress: { type: Boolean },
+    name: { type: String },
+    error: { type: String },
+    isOnline: { type: Boolean }
   };
 
   constructor() {
@@ -158,6 +161,19 @@ class GameBoard extends LitElement {
     this.timerId = null;
     this.message = '';
     this.isRoundInProgress = false;
+    this.name = '';
+    this.error = '';
+    this.isOnline = navigator.onLine;
+    
+    window.addEventListener('online', () => {
+      this.isOnline = true;
+      this.requestUpdate();
+    });
+    
+    window.addEventListener('offline', () => {
+      this.isOnline = false;
+      this.requestUpdate();
+    });
   }
 
   // Iniciar el juego y mostrar los números

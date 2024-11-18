@@ -72,13 +72,25 @@ class HomeView extends LitElement {
 
   static properties = {
     name: { type: String },
-    error: { type: String }
+    error: { type: String },
+    isOnline: { type: Boolean }
   };
 
   constructor() {
     super();
     this.name = '';
     this.error = '';
+    this.isOnline = navigator.onLine;
+    
+    window.addEventListener('online', () => {
+      this.isOnline = true;
+      this.requestUpdate();
+    });
+    
+    window.addEventListener('offline', () => {
+      this.isOnline = false;
+      this.requestUpdate();
+    });
   }
 
   handleInput(e) {
