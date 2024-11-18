@@ -184,7 +184,7 @@ class GameBoard extends LitElement {
   // Iniciar el juego y mostrar los números
   startGame() {
     if (this.gameOver) {
-      this.score = 0; // Reiniciar puntos solo si es nueva partida
+      this.score = 0; 
     }
     this.gameOver = false;
     this.message = '';
