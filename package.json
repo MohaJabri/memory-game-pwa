@@ -5,8 +5,8 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "start": "parcel ./index.html",
-        "build": "parcel build index.html sw.js --public-url /memory-game-pwa/",
+        "start": "parcel index.html --no-cache",
+        "build": "parcel build index.html sw.js --public-url https://mohajabri.github.io/memory-game-pwa/",
         "serve": "http-server dist",
         "lint": "eslint src/**/*.js",
         "test": "web-test-runner --node-resolve",
@@ -26,9 +26,12 @@
     },
     "devDependencies": {
         "@open-wc/testing": "^3.1.7",
+        "@parcel/transformer-raw": "^2.13.0",
         "@web/test-runner": "^0.15.0",
         "@web/test-runner-chrome": "^0.15.0",
         "chai": "^4.3.7",
+        "gh-pages": "^6.2.0",
+        "parcel": "^2.13.0",
         "sinon": "^15.0.0"
     }
 }
