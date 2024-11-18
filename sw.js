@@ -23,6 +23,8 @@ self.addEventListener('install', event => {
 });
 
 self.addEventListener('fetch', event => {
+  const baseUrl = 'https://mohajabri.github.io/memory-game-pwa/';
+  
   event.respondWith(
     caches.match(event.request)
       .then(response => {
@@ -30,26 +32,37 @@ self.addEventListener('fetch', event => {
           return response;
         }
 
-        const fetchRequest = event.request.clone();
-
-        return fetch(fetchRequest)
+        return fetch(event.request.clone())
           .then(response => {
-            if(!response || response.status === 404) {
-              return Response.redirect('https://mohajabri.github.io/memory-game-pwa/', 302);
-            }
-
-            const responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then(cache => {
-                cache.put(event.request, responseToCache);
+            if (!response || response.status === 404) {
+              return new Response('', {
+                status: 302,
+                statusText: 'Found',
+                headers: new Headers({
+                  Location: baseUrl
+                })
               });
-
+            }
+            
+            if (response.status === 200) {
+              const responseToCache = response.clone();
+              caches.open(CACHE_NAME)
+                .then(cache => {
+                  cache.put(event.request, responseToCache);
+                });
+            }
+            
             return response;
           })
           .catch(() => {
             if (event.request.mode === 'navigate') {
-              return Response.redirect('https://mohajabri.github.io/memory-game-pwa/', 302);
+              return new Response('', {
+                status: 302,
+                statusText: 'Found',
+                headers: new Headers({
+                  Location: baseUrl
+                })
+              });
             }
           });
       })

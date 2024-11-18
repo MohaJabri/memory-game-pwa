@@ -12,15 +12,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const baseRoute = '/memory-game-pwa';
     const baseUrl = 'https://mohajabri.github.io/memory-game-pwa/';
     
-    // Verificar si la ruta coincide con alguna de las rutas válidas
-    const validRoutes = [baseRoute, `${baseRoute}/`, `${baseRoute}/game`];
+    // Crear un array con todas las rutas válidas posibles
+    const validRoutes = [
+      baseRoute,
+      `${baseRoute}/`,
+      `${baseRoute}/game`,
+      '/memory-game-pwa',
+      '/memory-game-pwa/',
+      '/memory-game-pwa/game'
+    ];
     
     if (!validRoutes.includes(path)) {
       window.location.replace(baseUrl);
       return;
     }
     
-    if (path === `${baseRoute}/game`) {
+    if (path.includes('/game')) {
       const currentUser = sessionStorage.getItem('currentUser');
       if (!currentUser) {
         window.location.replace(baseUrl);
