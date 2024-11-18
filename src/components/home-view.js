@@ -1,4 +1,4 @@
-import { LitElement, html, css } from '../lib/lit.js';
+import { LitElement, html, css } from 'https://cdn.skypack.dev/lit';
 import { saveUser } from '../services/indexedDB.js';
 
 class HomeView extends LitElement {
