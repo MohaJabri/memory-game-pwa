@@ -6,7 +6,8 @@
     "extends": [
         "eslint:recommended",
         "plugin:lit/recommended",
-        "plugin:wc/recommended"
+        "plugin:wc/recommended",
+        "prettier"
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -17,11 +18,8 @@
         "wc"
     ],
     "rules": {
-        "indent": ["error", 2],
-        "linebreak-style": ["error", "unix"],
-        "quotes": ["error", "single"],
-        "semi": ["error", "always"],
         "no-unused-vars": "warn",
+        "no-console": ["warn", { "allow": ["warn", "error"] }],
         "lit/no-invalid-html": "error",
         "lit/no-duplicate-template-bindings": "error",
         "wc/no-invalid-element-name": "error"

@@ -71,15 +71,26 @@ La aplicación estará disponible en `http://localhost:8080`
 ```
 memory-game-pwa/
 ├── src/
-│   ├── components/       # Componentes LitElement
-│   ├── services/        # Servicios (IndexedDB, etc.)
-│   ├── tests/           # Tests
-│   └── app.js           # Punto de entrada
+│   ├── components/          # Componentes LitElement
+│   │   ├── game-board.js
+│   │   └── home-view.js
+│   ├── tests/              # Tests
+│   │   ├── components/
+│   │   │   ├── GameBoard.spec.js
+│   │   │   └── HomeView.spec.js
+│   │   └── services/
+│   │       └── IndexedDB.spec.js
+│   └── app.js              # Punto de entrada
 ├── public/
-│   └── icon.png        # Icono de la aplicación
-├── sw.js           # Service Worker
-├── manifest.json    # Manifest para PWA
-└── index.html          # HTML principal
+│   └── icon.png           # Icono de la aplicación
+├── dist/                   # Archivos generados
+├── .eslintrc.json         # Configuración ESLint
+├── .prettierrc            # Configuración Prettier
+├── .eslintignore          # Ignorar archivos para ESLint
+├── sw.js                  # Service Worker
+├── manifest.json          # Manifest para PWA
+├── package.json           # Dependencias y scripts
+└── index.html             # HTML principal
 ```
 
 ## Características
