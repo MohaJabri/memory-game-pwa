@@ -2,6 +2,7 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
 export default defineConfig({
+  base: '/memory-game-pwa/', 
   build: {
     rollupOptions: {
       input: {
@@ -11,16 +12,12 @@ export default defineConfig({
         entryFileNames: 'assets/[name].js',
         chunkFileNames: 'assets/[name].js',
         assetFileNames: 'assets/[name].[ext]',
-      }
-    }
+      },
+    },
   },
-  server: {
-    port: 1234
-  },
-  base: '/memory-game-pwa/',
   resolve: {
     alias: {
-      'lit': resolve(__dirname, 'node_modules/lit/index.js')
-    }
-  }
+      lit: resolve(__dirname, 'node_modules/lit/index.js'), 
+    },
+  },
 });
