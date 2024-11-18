@@ -267,6 +267,12 @@ class GameBoard extends LitElement {
     this.gameOver = true;
     this.message = message;
     this.isRoundInProgress = false;
+    
+    // Vibrar el dispositivo si está disponible y el juego ha terminado por perder
+    if ('vibrate' in navigator && message.includes('perdido')) {
+      navigator.vibrate([200, 100, 200]); 
+    }
+    
     this.requestUpdate();
   }
 
