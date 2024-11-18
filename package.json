@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "start": "parcel ./index.html",
-        "build": "parcel build index.html https://mohajabri.github.io/memory-game-pwa/",
+        "build": "parcel build index.html sw.js https://mohajabri.github.io/memory-game-pwa/",
         "serve": "http-server dist",
         "lint": "eslint src/**/*.js",
         "test": "web-test-runner --node-resolve",

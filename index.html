@@ -35,13 +35,15 @@
     <home-view></home-view>
     <game-board></game-board>
 
-    <script type="module" src="./src/app.js"></script>
+    <script src="./src/app.js" type="module"></script>
 
     <script type="module">
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
           navigator.serviceWorker
-            .register('./public/sw.js', { scope: '/memory-game-pwa/' })
+            .register(new URL('./sw.js', import.meta.url), { 
+              scope: '/memory-game-pwa/' 
+            })
             .then((registration) => {
               console.log('Service Worker registrado con éxito:', registration);
             })

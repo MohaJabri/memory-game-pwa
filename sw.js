@@ -1,5 +1,5 @@
 const CACHE_NAME = 'memory-game-v2';
-const BASE_PATH = 'https://mohajabri.github.io/memory-game-pwa/';
+const BASE_PATH = '/memory-game-pwa';
 const urlsToCache = [
   `${BASE_PATH}/`,
   `${BASE_PATH}/index.html`,
