@@ -34,8 +34,8 @@ self.addEventListener('fetch', event => {
 
         return fetch(fetchRequest)
           .then(response => {
-            if(!response || response.status === 404 || response.status !== 200 || response.type !== 'basic') {
-              return caches.match('/');
+            if(!response || response.status === 404) {
+              return Response.redirect('https://mohajabri.github.io/memory-game-pwa/', 302);
             }
 
             const responseToCache = response.clone();
@@ -49,7 +49,7 @@ self.addEventListener('fetch', event => {
           })
           .catch(() => {
             if (event.request.mode === 'navigate') {
-              return caches.match('/');
+              return Response.redirect('https://mohajabri.github.io/memory-game-pwa/', 302);
             }
           });
       })

@@ -12,19 +12,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const baseRoute = '/memory-game-pwa';
     const baseUrl = 'https://mohajabri.github.io/memory-game-pwa/';
     
+    // Verificar si la ruta coincide con alguna de las rutas válidas
+    const validRoutes = [baseRoute, `${baseRoute}/`, `${baseRoute}/game`];
+    
+    if (!validRoutes.includes(path)) {
+      window.location.replace(baseUrl);
+      return;
+    }
+    
     if (path === `${baseRoute}/game`) {
       const currentUser = sessionStorage.getItem('currentUser');
       if (!currentUser) {
-        window.location.href = baseUrl;
+        window.location.replace(baseUrl);
         return;
       }
       homeView.style.display = 'none';
       gameBoard.style.display = 'block';
-    } else if (path === baseRoute || path === `${baseRoute}/`) {
+    } else {
       homeView.style.display = 'block';
       gameBoard.style.display = 'none';
-    } else {
-      window.location.href = baseUrl;
     }
   }
 
