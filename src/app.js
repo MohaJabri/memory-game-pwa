@@ -1,5 +1,5 @@
 // src/app.js
-import { LitElement } from './lib/lit.js';
+import { LitElement, html, css } from 'lit';
 import './components/home-view.js';
 import './components/game-board.js';
 

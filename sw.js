@@ -4,6 +4,8 @@ const urlsToCache = [
   `${BASE_URL}/`,
   `${BASE_URL}/index.html`,
   `${BASE_URL}/src/app.js`,
+  `${BASE_URL}/node_modules/lit/index.js`,
+  `${BASE_URL}/node_modules/lit/directives/*.js`,
   `${BASE_URL}/src/components/home-view.js`,
   `${BASE_URL}/src/components/game-board.js`,
   `${BASE_URL}/manifest.webmanifest`,

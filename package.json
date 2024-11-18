@@ -9,6 +9,7 @@
         "build:sw": "parcel build sw.js --dist-dir dist --no-source-maps --no-cache",
         "build:manifest": "parcel build public/manifest.json --dist-dir dist/public --no-source-maps --no-cache",
         "build": "rm -rf dist && npm run build:html && npm run build:sw && npm run build:manifest",
+        "postbuild": "cp -r node_modules/lit dist/",
         "serve": "http-server dist",
         "lint": "eslint src/**/*.js",
         "test": "web-test-runner --node-resolve",
