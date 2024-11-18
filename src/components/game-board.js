@@ -1,4 +1,4 @@
-import { LitElement, html, unsafeCSS } from Lit;
+import { LitElement, html, unsafeCSS } from 'lit';
 import { saveUserScore, getCurrentUser } from '../services/indexedDB.js';
 
 class GameBoard extends LitElement {
