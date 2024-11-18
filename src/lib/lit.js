@@ -1,1 +1,1 @@
-export * from '../../node_modules/lit/index.js'; 
+export * from '/node_modules/lit/index.js'; 
