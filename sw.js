@@ -26,22 +26,18 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // Cache hit - retornar respuesta
         if (response) {
           return response;
         }
 
-        // Clonar la petición
         const fetchRequest = event.request.clone();
 
         return fetch(fetchRequest)
           .then(response => {
-            // Verificar si la respuesta es válida
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
+            if(!response || response.status === 404 || response.status !== 200 || response.type !== 'basic') {
+              return caches.match('/');
             }
 
-            // Clonar la respuesta
             const responseToCache = response.clone();
 
             caches.open(CACHE_NAME)
@@ -52,7 +48,6 @@ self.addEventListener('fetch', event => {
             return response;
           })
           .catch(() => {
-            // Si falla la red, intentar servir una página offline
             if (event.request.mode === 'navigate') {
               return caches.match('/');
             }

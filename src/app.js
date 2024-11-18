@@ -11,6 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const path = window.location.pathname;
     const baseRoute = '/memory-game-pwa';
+    const baseUrl = 'https://mohajabri.github.io/memory-game-pwa/';
     
     if (path === baseRoute || path === `${baseRoute}/`) {
       homeView.style.display = 'block';
@@ -19,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
       homeView.style.display = 'none';
       gameBoard.style.display = 'block';
     } else {
-      window.location.href = `${window.location.origin}${baseRoute}`;
+      window.location.href = baseUrl;
     }
   }
 
